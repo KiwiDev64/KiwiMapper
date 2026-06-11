@@ -1,8 +1,9 @@
+
 # Kiwi Injector (v1.0)
 
 A lightweight, modern DLL injector built with C++ and ImGui utilizing a sleek animated interface on top of ImGui Viewports.
 
-![Preview](https://your-image-link-or-gif-here.com)
+![Preview](<img width="620" height="455" alt="Animation" src="https://github.com/user-attachments/assets/2cfc5901-7824-4672-8723-4472faca76e2" />)
 
 ## ✨ Features
 * **Modern UI**: Full multi-viewport integration with custom dark theme styling.
