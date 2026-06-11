@@ -6,4 +6,3 @@ CMakeUserPresets.json
 [Rr]elease/
 x64/
 x86/
-headers/manualmap.h
