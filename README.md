@@ -17,7 +17,7 @@ A lightweight, modern DLL injector built with C++ and ImGui utilizing a sleek an
 * [ ] **LdrLoadDll Inject** (Coming soon in v1.1)
 * [ ] **Manual Mapping** (Coming soon in v1.2)
 * [ ] **Registry Config** (Coming soon in v1.2)
-* [ ] * [ ] **NtMapViewOfSection Inject** (Coming soon in v1.3)
+* [ ] * **NtMapViewOfSection Inject** (Coming soon in v1.3)
 
 ## 🚀 Building from Source
 Prerequisites: CMake and a C++20 compatible compiler (MSVC recommended).
