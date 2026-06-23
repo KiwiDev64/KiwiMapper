@@ -1,11 +1,6 @@
-.vs/
-out/
-bin/
-CMakeUserPresets.json
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
+bin
+.vs
 headers/manualmap.h
+out
 .gitignore
-.gitattributes
+LICENSE
