@@ -1,22 +1,21 @@
+# KiwiMapper (v1.0)
 
-# Kiwi Injector (v1.0)
+A lightweight, modern dynamic memory mapper and module runner built with C++20 and ImGui. Features a sleek, responsive interface leveraging ImGui Viewports for real-time process monitoring.
 
-A lightweight, modern DLL injector built with C++ and ImGui utilizing a sleek animated interface on top of ImGui Viewports.
-
-![Preview](https://github.com/user-attachments/assets/2cfc5901-7824-4672-8723-4472faca76e2)
+![Preview](https://github.com)
 
 ## ✨ Features
 * **Modern UI**: Full multi-viewport integration with custom dark theme styling.
-* **Animations**: Fluid Ease In-Out animations for the process list and logging console.
-* **Clean Logging**: Real-time structured output tracking with injection phase breakdown.
-* **Registry Config**: Component states, colors, and speeds are stored directly in the Windows Registry. *(coming soon)*
+* **Fluid Animations**: Smooth Ease In-Out animations for the process tree and runtime console.
+* **Structured Logs**: Real-time diagnostic output tracking module mapping phases.
+* **Registry Config**: Save window layouts, animation speeds, and theme preferences directly to the Windows Registry. *(coming soon)*
 * **CMake Architecture**: Easily buildable across multiple toolchains.
 
-## 🛠️ Injection Methods
-* [x] **LoadLibraryA Inject** (Standard WinAPI thread invocation)
-* [ ] **LdrLoadDll Inject** (Coming soon in v1.1)
-* [ ] **Manual Mapping** (Coming soon in v1.2)
-* [ ] **Registry Config** (Coming soon in v1.2)
+## 🛠️ Memory Mapping & Execution Methods
+* [x] **Standard Thread Mapping** (`LoadLibraryA` invocation via WinAPI)
+* [ ] **Subsystem Module Mapping** (`LdrLoadDll` execution pathing) *(Coming soon in v1.1)*
+* [ ] **Manual PE Mapping & Relocation** (Custom virtual memory allocation) *(Coming soon in v1.2)*
+* [ ] **Virtual Memory Section Mapping** (`NtMapViewOfSection` implementation) *(Coming soon in v1.3)*
 
 ## 🚀 Building from Source
 Prerequisites: CMake and a C++20 compatible compiler (MSVC recommended).

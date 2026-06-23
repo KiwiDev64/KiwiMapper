@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include <vector>
 #include <string>
-#include "..\headers\KiwiInjector.h"
+#include "..\headers\KiwiMapper.h"
 #pragma comment(lib, "ntdll.lib")
 
 std::string OpenFileDialog() {

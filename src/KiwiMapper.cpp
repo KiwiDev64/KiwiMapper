@@ -1,4 +1,4 @@
-﻿#include "..\headers\KiwiInjector.h"
+﻿#include "..\headers\KiwiMapper.h"
 #include <dwmapi.h>
 #pragma comment(lib, "dwmapi.lib")
 
@@ -10,7 +10,7 @@ ID3D11Device* g_pd3dDevice = nullptr;
 ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;
 ID3D11RenderTargetView* g_mainRenderTargetView = nullptr;
 IDXGISwapChain* g_pSwapChain = nullptr;
-WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"Ballistix Injector", nullptr };
+WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"Ballistix Mapper", nullptr };
 HWND hwnd = nullptr;
 //определения
 
