@@ -155,7 +155,7 @@ void gui() {
 	static int WidgthConst = Widgth;
 	static int HeightConst = Height;
 
-	const char* methods[] = { "Standard Injection" };
+	const char* methods[] = { "LoadLibraryA", "LdrLoadDll"};
 	static int current_method = 0;
 
 	while (done) {
@@ -179,7 +179,7 @@ void gui() {
 			else { flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize; }
 
 
-			Begin("Kiwi v1.0 (🥝)", &done, flags);
+			Begin("Kiwi v1.1 (🥝)", &done, flags);
 
 			PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(7.0f, 4.0f));
 			SetNextItemWidth(201);
@@ -201,6 +201,7 @@ void gui() {
 
 			if (Button("Inject")) {
 				Logs.push_back("[#########################]");
+				Logs.push_back("Method: " + std::string(methods[current_method]) + "\n");
 				int index = 0;
 				for (const auto& dll : dllList) { Inject(procpid, dll.path, current_method, index++); }
 				index = 0;
@@ -261,7 +262,7 @@ void gui() {
 			if (Widgth > WidgthConst) {
 				enanimcur = GetCursorPos();
 				SetCursorPos(pos);
-				choiceprocess(&selectproc, process, procpid, pidspinged, 181.0f + currentLogHeight, 304.0f * smoothFactorw);
+				if (Widgth > WidgthConst +5) choiceprocess(&selectproc, process, procpid, pidspinged, 181.0f + currentLogHeight, 304.0f * smoothFactorw);
 			}
 			else { Widgth = WidgthConst;  pidspinged = 0; }
 

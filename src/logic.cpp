@@ -72,6 +72,7 @@ DWORD Inject(DWORD pid, std::string path, int method, int count) {
     else if (!hProc) return false;
 
     if (method == 0) {
+
         LPVOID pMem = VirtualAllocEx(hProc, NULL, strlen(path.c_str()) + 1, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
         if (!pMem) { Logs.push_back("[×] " + s + " Alloc err"); CloseHandle(hProc); return false; }
         Logs.push_back("[+] " + s + " Alloc OK");
@@ -94,6 +95,76 @@ DWORD Inject(DWORD pid, std::string path, int method, int count) {
         CloseHandle(hProc);
         return hThread != NULL;
     }
+
+    if (method == 1) {
+
+        std::wstring wpath(path.begin(), path.end());
+        size_t pathBytes = (wpath.length() + 1) * sizeof(wchar_t);
+#pragma pack(push, 1)
+        struct ShellData {
+            HANDLE hModule;
+            PVOID fnLdrLoadDll;
+            UNICODE_STRING us;
+            BYTE code[64];
+            wchar_t pathBuf[MAX_PATH];
+        };
+#pragma pack(pop)
+
+        ShellData data = { 0 };
+        data.fnLdrLoadDll = GetProcAddress(GetModuleHandleA("ntdll.dll"), "LdrLoadDll");
+        if (!data.fnLdrLoadDll) { Logs.push_back("[×] " + s + " ntdll err"); CloseHandle(hProc); return false; }
+
+        LPVOID pMem = VirtualAllocEx(hProc, NULL, sizeof(ShellData), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+        if (!pMem) { Logs.push_back("[×] " + s + " Alloc err"); CloseHandle(hProc); return false; }
+        Logs.push_back("[+] " + s + " Alloc OK");
+
+        data.us.Length = (USHORT)(wpath.length() * sizeof(wchar_t));
+        data.us.MaximumLength = (USHORT)pathBytes;
+        data.us.Buffer = (PWSTR)((size_t)pMem + offsetof(ShellData, pathBuf));
+        wcscpy_s(data.pathBuf, wpath.c_str());
+
+        BYTE shellcode[] = {
+            0x48, 0x83, 0xEC, 0x28,                         // sub rsp, 40
+            0x48, 0x89, 0xCE,                               // mov rsi, rcx
+            0x48, 0x31, 0xC9,                               // xor rcx, rcx
+            0x48, 0x31, 0xD2,                               // xor rdx, rdx
+            0x4C, 0x8D, 0x46, 0x10,                         // lea r8,  [rsi+16]
+            0x4C, 0x8D, 0x0E,                               // lea r9,  [rsi]
+            0xFF, 0x56, 0x08,                               // call [rsi+8]
+            0x48, 0x83, 0xC4, 0x28,                         // add rsp, 40
+            0xC3                                            // ret
+        };
+        memcpy(data.code, shellcode, sizeof(shellcode));
+
+        if (!WriteProcessMemory(hProc, pMem, &data, sizeof(ShellData), NULL)) {
+            Logs.push_back("[×] " + s + " Write err");
+            VirtualFreeEx(hProc, pMem, 0, MEM_RELEASE);
+            CloseHandle(hProc);
+            return false;
+        }
+        Logs.push_back("[+] " + s + " Write OK");
+
+        PVOID pShellcodeEntry = (PVOID)((size_t)pMem + offsetof(ShellData, code));
+        HANDLE hThread = NULL;
+
+        NtCreateThreadEx(&hThread, THREAD_ALL_ACCESS, NULL, hProc, (PUSER_THREAD_START_ROUTINE)pShellcodeEntry, pMem, 0, 0, 0, 0, NULL);
+
+        if (hThread) {
+            Logs.push_back("[+] " + s + " Thread OK");
+            WaitForSingleObject(hThread, INFINITE);
+            CloseHandle(hThread);
+            Logs.push_back("[+] " + s + " Success");
+        }
+        else Logs.push_back("[×] " + s + " Thread err");
+
+        VirtualFreeEx(hProc, pMem, 0, MEM_RELEASE);
+        CloseHandle(hProc);
+        return hThread != NULL;
+    }
+
+
+
+
     return 0;
 }
 
