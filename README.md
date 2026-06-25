@@ -1,4 +1,4 @@
-# KiwiMapper (v1.0)
+# KiwiMapper (v1.1)
 
 A lightweight, modern dynamic memory mapper and module runner built with C++20 and ImGui. Features a sleek, responsive interface leveraging ImGui Viewports for real-time process monitoring.
 
@@ -13,7 +13,7 @@ A lightweight, modern dynamic memory mapper and module runner built with C++20 a
 
 ## 🛠️ Memory Mapping & Execution Methods
 * [x] **Standard Thread Mapping** (`LoadLibraryA` invocation via WinAPI)
-* [ ] **Subsystem Module Mapping** (`LdrLoadDll` execution pathing) *(Coming soon in v1.1)*
+* [x] **Subsystem Module Mapping** (`LdrLoadDll` execution pathing) *(Coming soon in v1.1)*
 * [ ] **Manual PE Mapping & Relocation** (Custom virtual memory allocation) *(Coming soon in v1.2)*
 * [ ] **Virtual Memory Section Mapping** (`NtMapViewOfSection` implementation) *(Coming soon in v1.3)*
 
