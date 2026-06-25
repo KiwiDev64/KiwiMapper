@@ -1,1 +1,7 @@
-
+.vs
+.git
+.gitignore
+.gitattributes
+headers/manualmap.h
+bin
+out
